@@ -7594,6 +7594,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Navbar = function Navbar() {
+  var base_url = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.base_url;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("nav", {
     className: "navbar navbar-expand-lg navbar-dark bg-dark",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
@@ -7630,7 +7631,7 @@ var Navbar = function Navbar() {
             className: "nav-item",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.InertiaLink, {
               className: "nav-link",
-              href: base_url + "/users",
+              href: base_url + "users",
               children: "Users"
             })
           })]
@@ -7725,7 +7726,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Create = function Create() {
-  var errors = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.usePage)().props.errors;
+  var thumnailRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.usePage)().props,
+      base_url = _usePage$props.base_url,
+      errors = _usePage$props.errors;
   console.log(errors.email);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -7747,9 +7751,10 @@ var Create = function Create() {
     var data = new FormData();
     data.append("name", values.name);
     data.append("email", values.email);
+    data.append("thumbnail", thumnailRef.current.files[0]);
     data.append("password", values.password);
     data.append("password_confirmation", values.password_confirmation);
-    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post(base_url + '/users', data);
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post(base_url + 'users', data);
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Layouts_Front__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -7798,6 +7803,21 @@ var Create = function Create() {
               }), errors.email && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                 className: "invalid-feedback",
                 children: errors.email
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "form-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                htmlFor: "thumbnail",
+                children: "Thumbnail"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "file",
+                ref: thumnailRef,
+                className: errors.thumbnail ? 'form-control is-invalid' : 'form-control',
+                id: "thumbnail",
+                value: values.thumbnail
+              }), errors.thumbnail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "invalid-feedback",
+                children: errors.thumbnail
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               className: "row",
@@ -7905,6 +7925,7 @@ var Edit = function Edit() {
       id = _usePage$props.id,
       name = _usePage$props.name,
       email = _usePage$props.email,
+      base_url = _usePage$props.base_url,
       errors = _usePage$props.errors;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -7927,7 +7948,7 @@ var Edit = function Edit() {
     data.append("name", values.name);
     data.append("email", values.email);
     data.append("_method", "PUT");
-    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post(base_url + '/users/' + values.id, data);
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_2__.Inertia.post(base_url + 'users/' + values.id, data);
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Layouts_Front__WEBPACK_IMPORTED_MODULE_1__["default"], {

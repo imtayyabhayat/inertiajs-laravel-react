@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Front from "../Layouts/Front";
 import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 
 const Create = () => {
-    const { errors } = usePage().props
+    const thumnailRef = useRef(null)
+    const { base_url, errors } = usePage().props
     console.log(errors.email);
     const [values, setValues] = useState({
         name: "",
@@ -25,9 +26,10 @@ const Create = () => {
         const data = new FormData();
         data.append("name", values.name);
         data.append("email", values.email);
+        data.append("thumbnail", thumnailRef.current.files[0]);
         data.append("password", values.password);
         data.append("password_confirmation", values.password_confirmation);
-        Inertia.post(base_url + '/users', data);
+        Inertia.post(base_url + 'users', data);
     }
     return (
         <Front title="Create User">
@@ -45,6 +47,11 @@ const Create = () => {
                                 <label htmlFor="email">Email</label>
                                 <input type="email" className={errors.email ? 'form-control is-invalid':'form-control'} id="email" placeholder="Email" value={values.email} onChange={handleChange} />
                                 {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="thumbnail">Thumbnail</label>
+                                <input type="file" ref={thumnailRef} className={errors.thumbnail ? 'form-control is-invalid':'form-control'} id="thumbnail" value={values.thumbnail} />
+                                {errors.thumbnail && <div className="invalid-feedback">{errors.thumbnail}</div>}
                             </div>
                             <div className="row">
                                 <div className="form-group col-md-6">
