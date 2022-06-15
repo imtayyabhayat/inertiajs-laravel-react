@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use App\Models\User;
 
@@ -51,12 +52,20 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
             'password' => 'required|min:8|confirmed',
         ]);
+
+        $dir_path = date('Y').'/'.date('m').'/';
+        if($request->hasFile('thumbnail')) {
+            // $thumbnail = $request->thumbnail->store('images', 'public');
+            $thumbnail = $request->file('thumbnail');
+        }
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'thumbnail' => $thumbnail->storeAs($dir_path . 'cover', rand() . '.' . $thumbnail->extension(), 'public') ?? null,
             'password' => bcrypt($request->password),
         ]);
 
@@ -120,7 +129,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        Storage::disk('public')->delete($user->thumbnail);
+        $user->delete();
         return redirect()->route('users.index');
     }
 }

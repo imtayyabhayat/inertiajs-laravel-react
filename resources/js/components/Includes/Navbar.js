@@ -1,7 +1,8 @@
 import React from "react";
-import { InertiaLink } from "@inertiajs/inertia-react";
+import { InertiaLink, usePage } from "@inertiajs/inertia-react";
 
 const Navbar = () => {
+    const { base_url } = usePage().props
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,7 +17,7 @@ const Navbar = () => {
                             <InertiaLink className="nav-link active" aria-current="page" href={ base_url }>Home</InertiaLink>
                         </li>
                         <li className="nav-item">
-                            <InertiaLink className="nav-link" href={ base_url+"/users" }>Users</InertiaLink>
+                            <InertiaLink className="nav-link" href={ base_url+"users" }>Users</InertiaLink>
                         </li>
                     </ul>
                 </div>

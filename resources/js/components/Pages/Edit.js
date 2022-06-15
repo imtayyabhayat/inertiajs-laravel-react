@@ -4,7 +4,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { usePage } from "@inertiajs/inertia-react";
 
 const Edit = () => {
-    const { id, name, email, errors } = usePage().props
+    const { id, name, email, base_url, errors } = usePage().props
     const [values, setValues] = useState({id, name, email});
     // console.log(values);
     function handleChange(e) {
@@ -20,7 +20,7 @@ const Edit = () => {
         data.append("name", values.name);
         data.append("email", values.email);
         data.append("_method", "PUT");
-        Inertia.post(base_url + '/users/'+values.id, data);
+        Inertia.post(base_url + 'users/'+values.id, data);
     }
     return (
         <Front title="Edit User">
