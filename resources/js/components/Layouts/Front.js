@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../includes/Navbar";
-import Footer from "../includes/Footer";
+import Navbar from "../Includes/Navbar";
+import Footer from "../Includes/Footer";
 
 const Front = ({title, children}) => {
     React.useEffect(() => {

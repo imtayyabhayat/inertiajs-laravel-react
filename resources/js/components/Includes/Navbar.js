@@ -1,7 +1,8 @@
 import React from "react";
 import { InertiaLink } from "@inertiajs/inertia-react";
 
-const Navbar = (props) => {
+const Navbar = () => {
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -16,20 +17,6 @@ const Navbar = (props) => {
                         </li>
                         <li className="nav-item">
                             <InertiaLink className="nav-link" href={ base_url+"/users" }>Users</InertiaLink>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <InertiaLink className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </InertiaLink>
-                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><InertiaLink className="dropdown-item" href="#">Action</InertiaLink></li>
-                                <li><InertiaLink className="dropdown-item" href="#">Another action</InertiaLink></li>
-                                <li><hr className="dropdown-divider"/></li>
-                                <li><InertiaLink className="dropdown-item" href="#">Something else here</InertiaLink></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item">
-                            <InertiaLink className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</InertiaLink>
                         </li>
                     </ul>
                 </div>

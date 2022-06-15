@@ -1,6 +1,6 @@
 import React from "react";
 import { InertiaProgress } from '@inertiajs/progress';
-import Front from "../layouts/Front";
+import Front from "../Layouts/Front";
 
 InertiaProgress.init()
 
