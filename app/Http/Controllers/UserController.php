@@ -11,7 +11,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
@@ -23,21 +23,21 @@ class UserController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'edit_url' => route('users.edit', $user->id),
+                    'delete_url' => route('users.destroy', $user->id),
                 ];
             }),
             'create_url' => route('users.create'),
         ]);
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        return Inertia::render('Create');
     }
 
     /**
@@ -48,7 +48,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -66,11 +78,16 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return Inertia::render('Edit', [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email
+        ]);
     }
 
     /**
@@ -78,11 +95,21 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,'.$id
+        ]);
+
+        User::findOrFail($id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('users.index');
+
     }
 
     /**
@@ -93,6 +120,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+        return redirect()->route('users.index');
     }
 }
